@@ -1,16 +1,105 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
-</head>
+<meta charset="UTF-8">
+<title>Alphabetical Article Sorter</title>
+<style>
+  * { box-sizing: border-box; }
 
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f2ede1;
+    background-image:
+      linear-gradient(to bottom, rgba(242,237,225,0.15), rgba(242,237,225,0.05) 40%),
+      repeating-linear-gradient(115deg, rgba(80,70,40,0.06) 0px, rgba(80,70,40,0.06) 2px, transparent 2px, transparent 6px),
+      linear-gradient(to bottom, #cfd3ad 0%, #b9bd94 25%, #9ca678 45%, #7c8a5c 65%, #5f6f45 85%, #4a5936 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
+  /* soft hazy overlay to mimic the faded, misty photo look */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(255,251,240,0.35) 0%, rgba(255,251,240,0.05) 55%, rgba(0,0,0,0.05) 100%);
+    pointer-events: none;
+  }
+
+  .wrapper {
+    max-width: 830px;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+  }
+
+  ul#band {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+  }
+
+  ul#band li {
+    position: relative;
+    padding: 22px 24px 22px 52px;
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 1.15rem;
+    color: #2b2b2b;
+  }
+
+  ul#band li:last-child {
+    border-bottom: none;
+  }
+
+  ul#band li::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #2b2b2b;
+  }
+</style>
+</head>
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
+
+<div class="wrapper">
+  <ul id="band"></ul>
+</div>
+
+<script>
+  const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+
+  const articles = ['a', 'an', 'the'];
+
+  function sortKey(name) {
+    const words = name.split(' ');
+    if (articles.includes(words[0].toLowerCase())) {
+      return words.slice(1).join(' ').toLowerCase();
+    }
+    return name.toLowerCase();
+  }
+
+  const sortedBands = [...bands].sort((a, b) => sortKey(a).localeCompare(sortKey(b)));
+
+  const list = document.getElementById('band');
+  sortedBands.forEach(name => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    list.appendChild(li);
+  });
 </script>
 
 </body>
-
 </html>
